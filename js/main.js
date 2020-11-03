@@ -1,25 +1,33 @@
 'use strict'
 
-// 0 button functionality
-function displayDigit(button) {
+// display digits to res window
+function displayObj(str) {
     let calcWindow = document.getElementById('res');
-
-    if (button === 0) {
-        calcWindow.innerHTML = btn0.innerHTML;
-    }
-
-    else if (button === 1) {
-        calcWindow.innerHTML = btn1.innerHTML;
-    }
+    calcWindow.innerHTML = str;
 }
+
+// create object to display
+function makeDisplayObj(obj) {
+
+    if (strToDisplay) {
+        strToDisplay += obj.toString();
+    } else {
+        strToDisplay = obj.toString();
+    }
+
+    return displayObj(strToDisplay);
+}
+
+let strToDisplay = '';
 
 const btn0 = document.getElementById('btn0');
 btn0.addEventListener('click', function() {
-    displayDigit(0);
+    makeDisplayObj(btn0.innerHTML);
 })
 
 const btn1 = document.getElementById('btn1');
 btn1.addEventListener('click', function() {
-    displayDigit(1)
+    makeDisplayObj(btn1.innerHTML);
 });
+
 
