@@ -18,12 +18,17 @@ function makeDisplayObj(obj) {
     return displayObj(strToDisplay);
 }
 
-function storeNumber() {
-    enteredNumbers.push(Number(strToDisplay))
+function convertAndStore(operator) {
+    let convertedInt = parseInt(strToDisplay, 2);
+    calculationObj.numbers.push(convertedInt);
+    calculationObj.operation = operator
+    console.log(calculationObj);
 }
 
 let strToDisplay = '';
-let enteredNumbers = [];
+let calculationObj = {'numbers': [],
+    'operation': null,
+    'result': null};
 
 const btn0 = document.getElementById('btn0');
 btn0.addEventListener('click', function() {
@@ -37,7 +42,13 @@ btn1.addEventListener('click', function() {
 
 const btnSum = document.getElementById('btnSum');
 btnSum.addEventListener('click', function() {
-    storeNumber();
+    convertAndStore('add');
     makeDisplayObj(btnSum.innerHTML);
+});
+
+const btnSub = document.getElementById('btnSub');
+btnSub.addEventListener('click', function() {
+    convertAndStore('subtract')
+    makeDisplayObj(btnSub.innerHTML)
 })
 
