@@ -18,7 +18,12 @@ function makeDisplayObj(obj) {
     return displayObj(strToDisplay);
 }
 
+function storeNumber() {
+    enteredNumbers.push(Number(strToDisplay))
+}
+
 let strToDisplay = '';
+let enteredNumbers = [];
 
 const btn0 = document.getElementById('btn0');
 btn0.addEventListener('click', function() {
@@ -30,4 +35,9 @@ btn1.addEventListener('click', function() {
     makeDisplayObj(btn1.innerHTML);
 });
 
+const btnSum = document.getElementById('btnSum');
+btnSum.addEventListener('click', function() {
+    storeNumber();
+    makeDisplayObj(btnSum.innerHTML);
+})
 
