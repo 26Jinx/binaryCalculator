@@ -11,14 +11,18 @@ function makeDisplayObj(obj) {
 
     if (obj === 'clr') {
         strToDisplay = '';
-        calculationObj = {'numbers': [],
-            'operation': null,
-            'result': null};
+        calculationObj = {
+            'numbers': [],
+            'operator': null,
+            'result': null
+        };
 
         console.log(calculationObj);
 
         return displayObj(strToDisplay);
 
+    } else if (obj === 'equals') {
+        strToDisplay = calculate();
     } else if (strToDisplay) {
         strToDisplay += obj.toString();
     } else {
@@ -28,17 +32,39 @@ function makeDisplayObj(obj) {
     return displayObj(strToDisplay);
 }
 
-function convertAndStore(operator) {
-    let convertedInt = parseInt(strToDisplay, 2);
-    calculationObj.numbers.push(convertedInt);
-    calculationObj.operation = operator
-    console.log(calculationObj);
+function convertAndStore(str) {
+    // split the display string into two numbers and an operator
+    let parsedStrArr = str.split(calculationObj.operator);
+
+    // convert binary numbers into decimal
+    calculationObj.numbers[0] = parseInt(parsedStrArr[0], 2);
+    calculationObj.numbers[1] = parseInt(parsedStrArr[1], 2);
 }
 
+function calculate() {
+    switch (calculationObj.operator) {
+        case '+':
+            calculationObj.result = calculationObj.numbers[0] + calculationObj.numbers[1]
+            break;
+        case '-':
+            calculationObj.result = calculationObj.numbers[0] - calculationObj.numbers[1]
+            break;
+        case '*':
+            calculationObj.result = calculationObj.numbers[0] * calculationObj.numbers[1]
+            break;
+        case '/':
+            calculationObj.result = calculationObj.numbers[0] / calculationObj.numbers[1]
+            break;
+    }
+    console.log(calculationObj);
+
+    // convert result int to binary and pass it to makeDisplayObj function
+    return (calculationObj.result >>> 0).toString(2);
+}
 
 let strToDisplay = '';
 let calculationObj = {'numbers': [],
-    'operation': null,
+    'operator': null,
     'result': null};
 
 const btn0 = document.getElementById('btn0');
@@ -53,26 +79,26 @@ btn1.addEventListener('click', () => {
 
 const btnSum = document.getElementById('btnSum');
 btnSum.addEventListener('click', () => {
-    convertAndStore('add');
     makeDisplayObj(btnSum.innerHTML);
+    calculationObj.operator = btnSum.innerHTML;
 }, false);
 
 const btnSub = document.getElementById('btnSub');
 btnSub.addEventListener('click', () => {
-    convertAndStore('subtract');
     makeDisplayObj(btnSub.innerHTML);
+    calculationObj.operator = btnSub.innerHTML;
 }, false)
 
 const btnMul = document.getElementById('btnMul');
 btnMul.addEventListener('click', () => {
-    convertAndStore('multiply');
     makeDisplayObj(btnMul.innerHTML);
+    calculationObj.operator = btnMul.innerHTML;
 }, false)
 
 const btnDiv = document.getElementById('btnDiv');
 btnDiv.addEventListener('click', () => {
-    convertAndStore('divide');
     makeDisplayObj(btnDiv.innerHTML);
+    calculationObj.operator = btnDiv.innerHTML;
 }, false);
 
 const btnClr = document.getElementById('btnClr');
@@ -82,9 +108,12 @@ btnClr.addEventListener('click', () => {
 
 const btnEql = document.getElementById('btnEql');
 btnEql.addEventListener('click', () => {
-    if (calculationObj['numbers'].length() === 2) {
-        calculationObj['result'] = sum(calculationObj['numbers'])
+    convertAndStore(strToDisplay);
 
+    if (calculationObj['numbers'].length === 2) {
+        makeDisplayObj('equals');
+    } else {
+        console.log('incomplete calculationObj');
     }
 
 })
