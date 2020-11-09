@@ -35,6 +35,7 @@ function convertAndStore(operator) {
     console.log(calculationObj);
 }
 
+
 let strToDisplay = '';
 let calculationObj = {'numbers': [],
     'operation': null,
@@ -77,6 +78,15 @@ btnDiv.addEventListener('click', () => {
 const btnClr = document.getElementById('btnClr');
 btnClr.addEventListener('click', () => {
     makeDisplayObj('clr');
+}, false);
+
+const btnEql = document.getElementById('btnEql');
+btnEql.addEventListener('click', () => {
+    if (calculationObj['numbers'].length() === 2) {
+        calculationObj['result'] = sum(calculationObj['numbers'])
+
+    }
+
 })
 
 
